@@ -5,5 +5,7 @@
   "repository": "https://github.com/adamTrz/rn-images-assets.git",
   "author": "Adam <trzcinski.adam@gmail.com>",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "chalk": "^2.1.0"
+  }
 }
