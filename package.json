@@ -1,0 +1,9 @@
+{
+  "name": "rn-images-assets",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/adamTrz/rn-images-assets.git",
+  "author": "Adam <trzcinski.adam@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}
