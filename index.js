@@ -9,20 +9,29 @@ const chalk = require('chalk');
 
 const copyImages = require('./lib/copyImages').copyImages;
 
-const colorLog = (color, msg) => console.log(chalk[color](msg));
-
 const exit = msg => {
   console.log(chalk.red(msg));
   process.exit(1);
 };
 
+const makeIOsPath = projectName => {
+  // TODO: optional arg 'projectName' = to be accessed instead of 1st element?
+  const ios = path.join(__dirname, 'ios');
+  const iosContent = fs.readdirSync(ios);
+  const iosPath = path.join(__dirname, iosContent[0], 'Images.xcassets');
+  return iosPath;
+};
+
 const makeImages = pathname => {
+  // console.log(process.argv);
+  if (!pathname) exit(`Please provide path to your images folder. Exiting.`);
   const absPath = path.join(__dirname, pathname);
   const androidPath = path.join(
     __dirname,
     '/android/app/src/main/res/drawable'
   );
-  // const iOsPAth = makeIOsPath();
+  const iosPath = makeIOsPath();
+  console.log('iosPath: ', iosPath);
   // access directory
   fs.readdir(absPath, (err, files) => {
     if (err) exit(`Could not acces pathname. ${err}`);
@@ -39,14 +48,10 @@ const makeImages = pathname => {
         copyImages(images, absPath, androidPath);
       else
         console.log(
-          chalk.red(`Error creating 'drawable' dir inside android path. ${err}`)
+          chalk.red(`Error creating 'drawable' dir inside Android path. ${err}`)
         );
     });
-
-    // Copy images (iOS)
-    // TODO: newPath must contain projectName (eg. '/ios/PromoPage/Images.xcassets')
-    // TODO: each file must be inside separate folder called like its name
-    // TODO: need to create Contents.json file for each image
+    copyImages(images, absPath, iosPath, true);
   });
 };
 
