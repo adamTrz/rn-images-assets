@@ -36,7 +36,7 @@ const makeImages = (pathname, projectName) => {
   fs.readdir(absPath, (err, files) => {
     if (err) exit(`Could not access pathname. ${err}`);
     const images = files.filter(file =>
-      path.extname(file).match(/.(jpg|jpeg|png|gif)$/i)
+      path.extname(file).match(/.(jpg|jpeg|png|gif|bmp)$/i)
     );
     if (!images || !images.length) {
       exit('No images found. Aborting.');
