@@ -15,41 +15,43 @@ const exit = msg => {
   process.exit(1);
 };
 
-const getiosPath = projectName => {
-  // TODO: optional arg 'projectName' = to be accessed instead of 1st element?
-  const ios = path.join(__dirname, 'ios');
-  const iosContent = fs.readdirSync(ios);
-  const iosPath = path.join(ios, iosContent[0], 'Images.xcassets');
+const getiosPath = () => {
+  const pathname = process.cwd();
+  const projectName = pathname.split('/').pop();
+  const iosPath = path.join(
+    process.cwd(),
+    'ios',
+    projectName,
+    'Images.xcassets'
+  );
   return iosPath;
 };
 
-const makeImages = (pathname, projectName) => {
-  // console.log(process.argv);
-  // TODO: optional arg 'projectName' = to be accessed instead of 1st element?
+const makeImages = pathname => {
   if (!pathname) exit(`Please provide path to your images folder. Exiting.`);
-  const absPath = path.join(__dirname, pathname);
+  const imagesAbsPath = path.join(process.cwd(), pathname);
   const androidPath = path.join(
-    __dirname,
+    process.cwd(),
     '/android/app/src/main/res/drawable'
   );
-  const iosPath = getiosPath(projectName);
-  fs.readdir(absPath, (err, files) => {
+  const iosPath = getiosPath();
+  fs.readdir(imagesAbsPath, (err, files) => {
     if (err) exit(`Could not access pathname. ${err}`);
     const images = files.filter(file =>
-      path.extname(file).match(/.(jpg|jpeg|png|gif|bmp)$/i)
+      path.extname(file).match(/\.(jpg|jpeg|png|gif|bmp)$/i)
     );
     if (!images || !images.length) {
       exit('No images found. Aborting.');
     }
     fs.mkdir(androidPath, err => {
       if (!err || err.code === 'EEXIST')
-        copyImages(images, absPath, androidPath);
+        copyImages(images, imagesAbsPath, androidPath);
       else
         log('red', `Error creating 'drawable' dir inside Android path. ${err}`);
     });
     fs.mkdir(iosPath, err => {
       if (!err || err.code === 'EEXIST')
-        copyImages(images, absPath, iosPath, true);
+        copyImages(images, imagesAbsPath, iosPath, true);
       else
         log('red', `Error creating 'drawable' dir inside Android path. ${err}`);
     });
