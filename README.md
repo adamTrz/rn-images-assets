@@ -12,8 +12,6 @@ we can write `<Images source={uri: 'react'} />`.
 
 Isn't that prettier? :smirk:
 
-##### Also
-When you `require` image from assets directory, React-Native should load them faster. *[source needed]*
 
 ### Usage description
 1. Instal globally:
@@ -24,8 +22,7 @@ When you `require` image from assets directory, React-Native should load them fa
 
 2. Inside your `react-native` project:
    
-   `$ rn-images-assets ./path/to/images/folder -p optional_ios_oprojectName`
-
+   `$ rn-images-assets ./path/to/images/folder`
 
 This should copy all images to respective iOS and Android directories.
 

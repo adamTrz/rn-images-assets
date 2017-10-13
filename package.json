@@ -9,8 +9,7 @@
     "chalk": "^2.1.0"
   },
   "bin": {
-    "rn-images-assets": "./bin/images.js",
-    "ria": "./bin/images.js"
+    "rn-images-assets": "./bin/images.js"
   },
   "engines": {
     "node": ">=6"
