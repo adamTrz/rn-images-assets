@@ -50,7 +50,8 @@ const makeImages = (pathname: string) => {
       else
         log(
           'red',
-          `Error creating 'drawable' dir inside Android path. ${e.message}`
+          `Error creating 'drawable' dir inside Android path.
+          ${e.message}`
         );
     });
     fs.mkdir(iosPath, 0o777, error => {
@@ -59,7 +60,8 @@ const makeImages = (pathname: string) => {
       else
         log(
           'red',
-          `Error creating 'drawable' dir inside Android path. ${error.message}`
+          `Error creating 'Images.xcassets' dir inside iOS path.
+          ${error.message}`
         );
     });
   });

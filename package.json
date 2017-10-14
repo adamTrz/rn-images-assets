@@ -5,7 +5,8 @@
   "author": "Adam Trzcinski<trzcinski.adam@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-dir lib/",
+    "build": "babel src/ -d lib/",
+    "postbuild": "cp ./src/Contents.json ./lib/Contents.json",
     "prepublish": "npm run build",
     "flow": "flow",
     "lint": "eslint src",
