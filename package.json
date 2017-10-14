@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "repository": "https://github.com/adamTrz/rn-images-assets.git",
-  "author": "Adam <trzcinski.adam@gmail.com>",
+  "author": "Adam Trzcinski<trzcinski.adam@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.1.0"
