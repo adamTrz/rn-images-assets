@@ -3,7 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const makeImages = require('../index').makeImages;
+const makeImages = require('../lib/index').makeImages;
 
 const printHelp = () => {
   const help = `
