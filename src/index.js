@@ -29,7 +29,6 @@ const getiosPath = () => {
 };
 
 const makeImages = (pathname: string) => {
-  if (!pathname) exit(`Please provide path to your images folder. Exiting.`);
   const imagesAbsPath = path.join(process.cwd(), pathname);
   const androidPath = path.join(
     process.cwd(),
@@ -37,7 +36,9 @@ const makeImages = (pathname: string) => {
   );
   const iosPath = getiosPath();
   fs.readdir(imagesAbsPath, (err, files) => {
-    if (err) exit(`Could not access pathname. ${err.message}`);
+    if (err)
+      exit(`Could not access pathname.
+    ${err.message}`);
     const images = files.filter(file =>
       path.extname(file).match(/\.(jpg|jpeg|png|gif|bmp)$/i)
     );

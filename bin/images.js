@@ -24,6 +24,7 @@ const version = JSON.parse(
 const printVersion = () => console.log(`Version: ${version}`);
 
 const images = arg => {
+  if (!arg) return printHelp();
   switch (arg) {
     case '-h':
     case '-help':
