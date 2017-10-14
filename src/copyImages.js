@@ -6,9 +6,9 @@ const copyFile = require('./copyFile').copyFile;
 const log = require('./log').log;
 const consents = require('./Contents.json');
 
-const createJson = (pathname: string, image: string) => {
+const createJson = (pathname: string, imageName: string) => {
   const jsonPath = path.join(pathname, 'Contents.json');
-  const replacer = (key, value) => (value === 'file' ? image : value);
+  const replacer = (key, value) => (value === 'file' ? imageName : value);
   fs.writeFile(jsonPath, JSON.stringify(consents, replacer, 2), err => {
     if (err) log('red', `Error creating JSON file. ${err.message}`);
   });
