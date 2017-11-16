@@ -40,9 +40,7 @@ const copyImages = (
             .then(() =>
               log(
                 'green',
-                `File ${img} copied to 'Images.xcassets/${
-                  newBase
-                }.imageset' directory.`
+                `File ${img} copied to 'Images.xcassets/${newBase}.imageset' directory.`
               )
             )
             .catch(e => log('red', `Error copying file '${img}. ${e.message}`));
