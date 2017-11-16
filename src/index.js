@@ -46,20 +46,20 @@ const makeImages = (pathname: string): Promise<boolean | string> =>
       );
       makeDir(androidPath)
         .then(() => copyImages(images, imagesAbsPath, androidPath))
+        .then(values =>
+          values.forEach(val => log('green', `${val} copied to ${androidPath}`))
+        )
         .catch(e =>
-          log(
-            'red',
-            `Error creating 'drawable' dir inside Android path. ${e.message}`
-          )
+          log('red', `Error copying files to ${androidPath}: ${e.message}`)
         );
       const iosPath = getiosPath();
       makeDir(iosPath)
         .then(() => copyImages(images, imagesAbsPath, iosPath, true))
+        .then(values =>
+          values.forEach(val => log('green', `${val} copied to ${iosPath}`))
+        )
         .catch(e =>
-          log(
-            'red',
-            `Error creating 'Images.xcassets' dir inside iOS path. ${e.message}`
-          )
+          log('red', `Error copying files to ${iosPath}: ${e.message}`)
         );
       resolve(true);
     });
