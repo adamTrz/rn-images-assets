@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src/ -d lib/",
+    "precommit": "lint-staged",
     "postbuild": "cp ./src/Contents.json ./lib/Contents.json",
     "prepublish": "npm run build",
     "flow": "flow",
@@ -38,5 +39,11 @@
   },
   "babel": {
     "presets": ["flow"]
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\"",
+      "git add"
+    ]
   }
 }
