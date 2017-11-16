@@ -1,4 +1,5 @@
 /* @flow */
+
 /**
 * Moves files from specified directory to ios and androind assets ones
 *
@@ -9,12 +10,8 @@ const path = require('path');
 const fs = require('fs');
 
 const copyImages = require('./copyImages').copyImages;
+const makeDir = require('./makeDir').makeDir;
 const log = require('./log').log;
-
-const exit = msg => {
-  log('red', msg);
-  process.exit(1);
-};
 
 const getiosPath = () => {
   const pathname = process.cwd();
@@ -28,44 +25,44 @@ const getiosPath = () => {
   return iosPath;
 };
 
-const makeImages = (pathname: string) => {
-  const imagesAbsPath = path.join(process.cwd(), pathname);
-  const androidPath = path.join(
-    process.cwd(),
-    '/android/app/src/main/res/drawable'
-  );
-  const iosPath = getiosPath();
-  fs.readdir(imagesAbsPath, (err, files) => {
-    if (err)
-      exit(`Could not access pathname.
-    ${err.message}`);
-    const images = files.filter(file =>
-      path.extname(file).match(/\.(jpg|jpeg|png|gif|bmp)$/i)
-    );
-    if (!images || !images.length) {
-      exit('No images found. Aborting.');
-    }
-    fs.mkdir(androidPath, 0o777, e => {
-      if (!e || e.code === 'EEXIST')
-        copyImages(images, imagesAbsPath, androidPath);
-      else
-        log(
-          'red',
-          `Error creating 'drawable' dir inside Android path.
-          ${e.message}`
+const makeImages = (pathname: string): Promise<boolean | string> =>
+  new Promise((resolve, reject) => {
+    const imagesAbsPath = path.join(process.cwd(), pathname);
+    fs.readdir(imagesAbsPath, (err, files) => {
+      if (err) {
+        reject(`Could not access pathname. ${err.message}`);
+        return;
+      }
+      const images = files.filter(file =>
+        path.extname(file).match(/\.(jpg|jpeg|png|gif|bmp)$/i)
+      );
+      if (!images || !images.length) {
+        reject('No images found. Aborting.');
+        return;
+      }
+      const androidPath = path.join(
+        process.cwd(),
+        '/android/app/src/main/res/drawable'
+      );
+      makeDir(androidPath)
+        .then(() => copyImages(images, imagesAbsPath, androidPath))
+        .catch(e =>
+          log(
+            'red',
+            `Error creating 'drawable' dir inside Android path. ${e.message}`
+          )
         );
-    });
-    fs.mkdir(iosPath, 0o777, error => {
-      if (!error || error.code === 'EEXIST')
-        copyImages(images, imagesAbsPath, iosPath, true);
-      else
-        log(
-          'red',
-          `Error creating 'Images.xcassets' dir inside iOS path.
-          ${error.message}`
+      const iosPath = getiosPath();
+      makeDir(iosPath)
+        .then(() => copyImages(images, imagesAbsPath, iosPath, true))
+        .catch(e =>
+          log(
+            'red',
+            `Error creating 'Images.xcassets' dir inside iOS path. ${e.message}`
+          )
         );
+      resolve(true);
     });
   });
-};
 
 exports.makeImages = makeImages;

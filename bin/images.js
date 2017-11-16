@@ -33,7 +33,10 @@ const images = arg => {
     case '-version':
       return printVersion();
     default:
-      return makeImages(arg);
+      return makeImages(arg).catch(errr => {
+        console.log('errr', errr);
+        process.exit(1);
+      });
   }
 };
 
