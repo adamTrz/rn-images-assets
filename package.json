@@ -11,20 +11,24 @@
     "prepublish": "npm run build",
     "flow": "flow",
     "lint": "eslint src",
-    "test": "npm run flow && npm run lint",
-    "prettier":
-      "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\""
+    "prettier": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\"",
+    "test": "mocha ./tests/*.js"
   },
   "bin": {
     "rn-images-assets": "./bin/images.js"
   },
   "main": "./lib/index.js",
-  "files": ["lib/", "bin/"],
+  "files": [
+    "lib/",
+    "bin/"
+  ],
   "engines": {
     "node": ">=6"
   },
   "dependencies": {
-    "chalk": "^2.1.0"
+    "chalk": "^2.1.0",
+    "mocha": "^4.0.1",
+    "mock-fs": "^4.4.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -36,10 +40,15 @@
     "prettier": "^1.7.4"
   },
   "eslintConfig": {
-    "extends": "callstack-io"
+    "extends": "callstack-io",
+    "env": {
+      "mocha": true
+    }
   },
   "babel": {
-    "presets": ["flow"]
+    "presets": [
+      "flow"
+    ]
   },
   "lint-staged": {
     "src/**/*.js": [
