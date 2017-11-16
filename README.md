@@ -1,5 +1,6 @@
 # rn-images-assets
 
+[![CircleCI](https://circleci.com/gh/adamTrz/rn-images-assets/tree/master.svg?style=svg)](https://circleci.com/gh/adamTrz/rn-images-assets/tree/master)
 
 ## _Copy images from given path to Android and iOS assets directories._
 
