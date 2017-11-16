@@ -1,10 +1,10 @@
 /* @flow */
 
 /**
-* Moves files from specified directory to ios and androind assets ones
-*
-* @param pathname Path to a folder containing images.
-*/
+ * Moves files from specified directory to ios and android assets ones
+ *
+ * @param pathname Path to a folder containing images.
+ */
 
 const path = require('path');
 const fs = require('fs');
